@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+
+"""The setup script."""
+
+from setuptools import setup, find_packages
+
+with open('README.rst') as readme_file:
+    readme = readme_file.read()
+
+with open('HISTORY.rst') as history_file:
+    history = history_file.read()
+
+with open('requirements.txt') as f:
+    requirements = f.read().replace('==', '>=').splitlines()
+
+with open('requirements_dev.txt') as f:
+    requirements_dev = f.read().replace('==', '>=').splitlines()
+
+
+# setup_requirements = ['pytest-runner', ]
+setup_requirements = []
+
+test_requirements = ['pytest>=3', ]
+
+setup(
+    author="Goncalo Magno",
+    author_email='goncalo@gmagno.dev',
+    python_requires='>=3.5',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+    ],
+    description="A Python CLI utility to monitor temp",
+    entry_points={
+        'console_scripts': [
+            'tmon=tmon.cli:main',
+        ],
+    },
+    install_requires=requirements,
+    license="MIT license",
+    long_description=readme + '\n\n' + history,
+    include_package_data=True,
+    keywords='tmon',
+    name='tmon',
+    packages=find_packages(include=['tmon', 'tmon.*']),
+    setup_requires=setup_requirements,
+    extras_require={
+            'dev': requirements_dev,
+    },
+    data_files=[(
+        '.', [
+            'requirements.txt',
+            'requirements_dev.txt',
+        ]
+    )],
+    test_suite='tests',
+    tests_require=test_requirements,
+    url='https://github.com/gmagno/tmon',
+    version='0.1.0',
+    zip_safe=False,
+)

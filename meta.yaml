@@ -1,0 +1,38 @@
+{% set name = "tmon" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  path: .
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - numpy
+    - pandas
+    - scipy
+    # - asciichartpy
+    - pytest-runner
+
+about:
+  home: "TBD"
+  license: "PROPRIETARY,"
+  license_family: "PROPRIETARY,"
+  license_file: ""
+  summary: "tmon "
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - https://github.com/gmagno/
