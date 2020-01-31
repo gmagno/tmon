@@ -52,7 +52,7 @@ class TMon:
                 Popen(args, stdout=sys.stdout, stderr=sys.stderr)
             )
             self.tf = stack.enter_context(tempfile.NamedTemporaryFile(
-                mode='w+', prefix=f"tmon-{cdt}-",
+                mode='w+', prefix="tmon-{}-".format(cdt),
                 suffix=".txt", delete=False, buffering=1
             ))
 
@@ -75,7 +75,7 @@ class TMon:
         self.eprint("\n\n===================")
         self.eprint("Temp Monitor Report:\n")
         self.plot()
-        self.eprint(f"\n{self.tf.name}")
+        self.eprint("\n{}".format(self.tf.name))
         self.eprint("===================")
 
     def plot(self):
@@ -93,5 +93,5 @@ class TMon:
         if len(df) <= 6:
             self.eprint("No data to plot")
             return
-        self.eprint(f"   Temp (°C) for a period of {period}")
+        self.eprint("   Temp (°C) for a period of {}".format(period))
         self.eprint(plot(df, {'height': 15}))
