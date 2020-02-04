@@ -48,18 +48,18 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 tmon tests
+	python -m flake8 tmon tests
 
 test: ## run tests quickly with the default Python
-	pytest
+	python -m pytest
 
 test-all: ## run tests on every Python version with tox
-	tox
+	python -m tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source tmon -m pytest
-	coverage report -m
-	coverage html
+	python -m coverage run --source tmon -m pytest
+	python -m coverage report -m
+	python -m coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
