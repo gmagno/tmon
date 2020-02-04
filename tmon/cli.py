@@ -1,4 +1,5 @@
 """CLI script for tmon."""
+
 import sys
 
 from tmon import tmon

@@ -7,3 +7,6 @@
 # from tmon import tmon
 
 # TODO: add tests
+
+def test_dummy():
+    assert True

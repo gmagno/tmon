@@ -10,12 +10,20 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-with open('requirements.txt') as f:
-    requirements = f.read().replace('==', '>=').splitlines()
+requirements = []
 
-with open('requirements_dev.txt') as f:
-    requirements_dev = f.read().replace('==', '>=').splitlines()
-
+requirements_dev = [
+    'pip',
+    'bump2version',
+    'wheel',
+    'watchdog',
+    'flake8',
+    'tox',
+    'coverage',
+    'Sphinx',
+    'twine',
+    'pytest',
+]
 
 # setup_requirements = ['pytest-runner', ]
 setup_requirements = []
@@ -54,12 +62,12 @@ setup(
     extras_require={
             'dev': requirements_dev,
     },
-    data_files=[(
-        '.', [
-            'requirements.txt',
-            'requirements_dev.txt',
-        ]
-    )],
+    # data_files=[(
+    #     '.', [
+    #         'requirements.txt',
+    #         'requirements_dev.txt',
+    #     ]
+    # )],
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/gmagno/tmon',

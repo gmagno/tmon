@@ -3,6 +3,7 @@
 import contextlib
 import datetime
 import glob
+import math
 import pathlib
 import signal
 from subprocess import Popen, TimeoutExpired
@@ -10,9 +11,7 @@ import sys
 import time
 import tempfile
 
-from asciichartpy import plot
-import pandas as pd
-from scipy.signal import decimate
+from tmon.asciichart import plot
 
 
 class TMon:
@@ -45,7 +44,8 @@ class TMon:
 
     def run(self, args):
         self.setup_signal_handlers()
-        cdt = datetime.datetime.now().strftime("%Y%m%d@%Hh%Mm%S")
+        start = datetime.datetime.now()
+        cdt = start.strftime("%Y%m%d@%Hh%Mm%S")
 
         with contextlib.ExitStack() as stack:
             self.proc = stack.enter_context(
@@ -56,18 +56,22 @@ class TMon:
                 suffix=".txt", delete=False, buffering=1
             ))
 
-            while self.keep_running:
+            while True:  # do-while() loop to ensure it runs at least once
                 tmp_files = glob.glob("/sys/class/thermal/thermal_zone*/temp")
                 tmps = [pathlib.Path(p).read_text().strip() for p in tmp_files]
                 self.tf.write((' '.join(tmps) + '\n'))
+                if not self.keep_running:
+                    break
                 time.sleep(1)
-
             try:
                 outs, errs = self.proc.communicate(timeout=5)
             except TimeoutExpired:
                 self.proc.kill()
                 outs, errs = self.proc.communicate()
             ret = self.proc.returncode
+
+            self.period = str(datetime.datetime.now() - start).split('.')[0]
+
             self.report()
         return ret
 
@@ -79,19 +83,18 @@ class TMon:
         self.eprint("===================")
 
     def plot(self):
-        try:
-            df = pd.read_csv(self.tf.name, sep=' ', header=None, dtype='float')
-        except pd.errors.EmptyDataError:
-            # trying to read an empty file...
-            self.eprint("No data to plot")
-            return
-        df = df.max(axis=1)/1000.
-        ratio = int(len(df) / 90)  # must be greater than 27
+        lines = pathlib.Path(self.tf.name).read_text().splitlines()
+        ds = [max([float(t) for t in l.split(' ')]) / 1000 for l in lines]
+        ratio = int(len(ds) / 90)
         if ratio > 1:
-            df = decimate(df, ratio, ftype='iir')
-        period = str(datetime.timedelta(seconds=len(df)))
-        if len(df) <= 6:
-            self.eprint("No data to plot")
-            return
-        self.eprint("   Temp (°C) for a period of {}".format(period))
-        self.eprint(plot(df, {'height': 15}))
+            ds = ds[::ratio]
+        # period = str(datetime.timedelta(seconds=len(ds)))
+        self.eprint("   Temp (°C) for a period of {}".format(self.period))
+        if len(ds) > 1:
+            self.eprint(plot(ds, {
+                'height': 15,
+                'minimum': math.floor(min(ds)),
+                'maximum': math.ceil(max(ds) + 0.1),
+            }))
+        else:
+            self.eprint("   >> {} °C <<".format(ds[0]))

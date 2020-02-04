@@ -18,11 +18,6 @@ requirements:
     - python
   run:
     - python
-    - numpy
-    - pandas
-    - scipy
-    # - asciichartpy
-    - pytest-runner
 
 about:
   home: "TBD"

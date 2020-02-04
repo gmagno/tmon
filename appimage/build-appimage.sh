@@ -24,10 +24,9 @@ export PKG_OUT_DIR=pkg-out
 mkdir -p $PKG_OUT_DIR
 conda build --output-folder $PKG_OUT_DIR ..
 
-export CONDA_CHANNELS=local;conda-forge
+export CONDA_CHANNELS='local;conda-forge'
 export CONDA_PACKAGES=$PKG_OUT_DIR/linux-64/tmon-0.1.0-py37_0.tar.bz2
-# export PIP_REQUIREMENTS='asciichartpy numpy pandas scipy'
-export PIP_REQUIREMENTS='numpy pandas scipy'
+# export PIP_REQUIREMENTS='numpy pandas scipy'
 
 ./linuxdeploy-x86_64.AppImage \
     --appdir AppDir \
