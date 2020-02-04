@@ -4,6 +4,14 @@ tmon package
 Submodules
 ----------
 
+tmon.asciichart module
+----------------------
+
+.. automodule:: tmon.asciichart
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 tmon.cli module
 ---------------
 
