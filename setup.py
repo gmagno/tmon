@@ -25,7 +25,6 @@ requirements_dev = [
     'pytest',
 ]
 
-# setup_requirements = ['pytest-runner', ]
 setup_requirements = []
 
 test_requirements = ['pytest>=3', ]
@@ -45,7 +44,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="A Python CLI utility to monitor temp",
+    description="A CLI tool to monitor temp while running a child process",
     entry_points={
         'console_scripts': [
             'tmon=tmon.cli:main',
@@ -62,12 +61,6 @@ setup(
     extras_require={
             'dev': requirements_dev,
     },
-    # data_files=[(
-    #     '.', [
-    #         'requirements.txt',
-    #         'requirements_dev.txt',
-    #     ]
-    # )],
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/gmagno/tmon',

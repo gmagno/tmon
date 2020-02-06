@@ -1,5 +1,5 @@
-{% set name = "tmon" %}
-{% set version = "0.1.0" %}
+{% set name = 'tmon' %}
+{% set version = '0.1.0' %}
 
 package:
   name: "{{ name|lower }}"
@@ -20,13 +20,13 @@ requirements:
     - python
 
 about:
-  home: "TBD"
-  license: "PROPRIETARY,"
-  license_family: "PROPRIETARY,"
-  license_file: ""
-  summary: "tmon "
-  doc_url: ""
-  dev_url: ""
+  home: "https://github.com/gmagno/tmon"
+  license: "MIT,"
+  license_family: "MIT,"
+  license_file: "LICENSE"
+  summary: "Temperature Monitor (tmon v{{ version }})"
+  doc_url: "https://tmon.readthedocs.io"
+  dev_url: "https://github.com/gmagno/tmon"
 
 extra:
   recipe-maintainers:
