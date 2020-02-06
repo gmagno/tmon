@@ -20,7 +20,7 @@ class AxisSizeAction(argparse.Action):
 
 def parse_args():
     description = (
-        "Temperature Monitor (tmon v0.2.0) -- executes a program while\n"
+        "Temperature Monitor (tmon v0.3.0) -- executes a program while\n"
         "monitoring CPU temperature, reporting the min, max and mean\n"
         "temperatures and plotting an ascii chart at the end to stderr.\n"
         "All signals are redirected to the program.\n"
@@ -158,7 +158,7 @@ def parse_args():
 def main():
     args = parse_args()
     if args['version']:
-        print("Temperature Monitor -- tmon v0.2.0")
+        print("Temperature Monitor -- tmon v0.3.0")
         return 0
     t = tmon.TMon(
         config={k: args[k] for k in args if k in ['ysize', 'xsize', 'ylim']}
