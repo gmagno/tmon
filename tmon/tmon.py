@@ -87,7 +87,7 @@ class TMon:
         self.eprint("\n\n===================")
         self.eprint("Temp Monitor Report:\n")
         self.plot(self.ds)
-        self.eprint("\n{}".format(self.tf.name))
+        self.eprint("\n   {}".format(self.tf.name))
         self.eprint("===================")
 
     def plot(self, ds):
@@ -110,5 +110,12 @@ class TMon:
                 'minimum': minimum,
                 'maximum': maximum,
             }))
+            self.eprint('')
+            min_val = round(min(self.ds), 1)
+            avg_val = round(sum(self.ds) / len(self.ds), 1)
+            max_val = round(max(self.ds), 1)
+            self.eprint("   >> min: {} °C <<".format(min_val))
+            self.eprint("   >> avg: {} °C <<".format(avg_val))
+            self.eprint("   >> max: {} °C <<".format(max_val))
         else:
-            self.eprint("   >> {} °C <<".format(ds[0]))
+            self.eprint("   >> {} °C <<".format(round(ds[0], 1)))
