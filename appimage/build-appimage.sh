@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+version=0.2.0
+
 mkdir -p build && cd build
 
 wget -nc "https://raw.githubusercontent.com/TheAssassin/linuxdeploy-plugin-conda/master/linuxdeploy-plugin-conda.sh"
@@ -25,7 +27,7 @@ mkdir -p $PKG_OUT_DIR
 conda build --output-folder $PKG_OUT_DIR ..
 
 export CONDA_CHANNELS='local;conda-forge'
-export CONDA_PACKAGES=$PKG_OUT_DIR/linux-64/tmon-0.1.0-py37_0.tar.bz2
+export CONDA_PACKAGES=$PKG_OUT_DIR/linux-64/tmon-$version-py37_0.tar.bz2
 # export PIP_REQUIREMENTS='numpy pandas scipy'
 
 ./linuxdeploy-x86_64.AppImage \
