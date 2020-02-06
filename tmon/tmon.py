@@ -46,7 +46,6 @@ class TMon:
             signal.signal(sig, self.signal_handler)
 
     def run(self, args):
-        print(args)
         self.setup_signal_handlers()
         start = datetime.datetime.now()
         cdt = start.strftime("%Y%m%d@%Hh%Mm%S")
@@ -92,8 +91,6 @@ class TMon:
         self.eprint("===================")
 
     def plot(self, ds):
-        print(self.config['xsize'])
-        print(self.config)
         ratio = int(len(ds) / self.config['xsize'])
         if ratio > 1:
             ds = ds[::ratio]
