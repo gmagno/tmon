@@ -16,7 +16,8 @@ from tmon.asciichart import plot
 
 class TMon:
 
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.keep_running = True
         self.tf = None
         self.proc = None
@@ -30,12 +31,14 @@ class TMon:
             # back to parent
             self.keep_running = False
         else:
-            # all the other signals should be injected to child
+            # all the other signals should be injected to the child process
             try:
                 self.proc.send_signal(sig)
             except AttributeError:
                 # Just in case a signal is sent before the process is spawned
-                self.keep_running = False
+                # or no child process was executed at all
+                if sig == signal.Signals.SIGINT:
+                    self.keep_running = False
 
     def setup_signal_handlers(self):
         catchable_sigs = set(signal.Signals) - {signal.SIGKILL, signal.SIGSTOP}
@@ -43,14 +46,16 @@ class TMon:
             signal.signal(sig, self.signal_handler)
 
     def run(self, args):
+        print(args)
         self.setup_signal_handlers()
         start = datetime.datetime.now()
         cdt = start.strftime("%Y%m%d@%Hh%Mm%S")
 
         with contextlib.ExitStack() as stack:
-            self.proc = stack.enter_context(
-                Popen(args, stdout=sys.stdout, stderr=sys.stderr)
-            )
+            if args:
+                self.proc = stack.enter_context(
+                    Popen(args, stdout=sys.stdout, stderr=sys.stderr)
+                )
             self.tf = stack.enter_context(tempfile.NamedTemporaryFile(
                 mode='w+', prefix="tmon-{}-".format(cdt),
                 suffix=".txt", delete=False, buffering=1
@@ -63,12 +68,14 @@ class TMon:
                 if not self.keep_running:
                     break
                 time.sleep(1)
-            try:
-                outs, errs = self.proc.communicate(timeout=5)
-            except TimeoutExpired:
-                self.proc.kill()
-                outs, errs = self.proc.communicate()
-            ret = self.proc.returncode
+            ret = 0
+            if args:
+                try:
+                    outs, errs = self.proc.communicate(timeout=5)
+                except TimeoutExpired:
+                    self.proc.kill()
+                    outs, errs = self.proc.communicate()
+                ret = self.proc.returncode
 
             self.period = str(datetime.datetime.now() - start).split('.')[0]
 
@@ -76,25 +83,35 @@ class TMon:
         return ret
 
     def report(self):
+        lines = pathlib.Path(self.tf.name).read_text().splitlines()
+        self.ds = [max([float(t) for t in l.split(' ')]) / 1000 for l in lines]
         self.eprint("\n\n===================")
         self.eprint("Temp Monitor Report:\n")
-        self.plot()
+        self.plot(self.ds)
         self.eprint("\n{}".format(self.tf.name))
         self.eprint("===================")
 
-    def plot(self):
-        lines = pathlib.Path(self.tf.name).read_text().splitlines()
-        ds = [max([float(t) for t in l.split(' ')]) / 1000 for l in lines]
-        ratio = int(len(ds) / 90)
+    def plot(self, ds):
+        print(self.config['xsize'])
+        print(self.config)
+        ratio = int(len(ds) / self.config['xsize'])
         if ratio > 1:
             ds = ds[::ratio]
-        # period = str(datetime.timedelta(seconds=len(ds)))
         self.eprint("   Temp (°C) for a period of {}".format(self.period))
         if len(ds) > 1:
+            try:
+                minimum, maximum = self.config['ylim']
+            except TypeError:
+                minimum = math.floor(min(ds))
+                maximum = math.ceil(max(ds) + 0.1)
+            else:
+                minimum = min(minimum, math.floor(min(ds)))
+                maximum = max(maximum, math.ceil(max(ds) + 0.1))
+
             self.eprint(plot(ds, {
-                'height': 15,
-                'minimum': math.floor(min(ds)),
-                'maximum': math.ceil(max(ds) + 0.1),
+                'height': self.config['ysize'] - 1,
+                'minimum': minimum,
+                'maximum': maximum,
             }))
         else:
             self.eprint("   >> {} °C <<".format(ds[0]))
