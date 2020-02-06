@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-version=0.3.0
+version=0.3.1
 
 mkdir -p build && cd build
 
