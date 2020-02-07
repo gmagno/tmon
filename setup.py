@@ -55,7 +55,7 @@ setup(
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='tmon',
-    name='tmon',
+    name='tmonpy',
     packages=find_packages(include=['tmon', 'tmon.*']),
     setup_requires=setup_requirements,
     extras_require={
