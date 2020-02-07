@@ -31,7 +31,18 @@ A Python CLI utility to monitor cpu temperature
 Install
 --------
 
-* pip install tmonpy
+::
+
+        pip install tmonpy
+
+or
+
+::
+
+        $ # download the AppImage file from the releases page
+        $ wget https://github.com/gmagno/tmon/releases/latest/download/tmon-???????-x86_64.AppImage
+        $ chmod +x tmon-*-x86_64.AppImage
+
 
 
 Usage
