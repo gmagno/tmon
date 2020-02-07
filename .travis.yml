@@ -1,53 +1,53 @@
 # Config file for automatic testing at travis-ci.org
 
-language: python
-python:
-  - 3.8
-  - 3.7
-  - 3.6
-  - 3.5
+# language: python
+# python:
+#   - 3.8
+#   - 3.7
+#   - 3.6
+#   - 3.5
 
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox-travis
+# # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+# install: pip install -U tox-travis
 
-# Command to run tests, e.g. python setup.py test
-script: tox
+# # Command to run tests, e.g. python setup.py test
+# script: tox
 
-# Assuming you have installed the travis-ci CLI tool, after you
-# create the Github repo and add it to Travis, run the
-# following command to finish PyPI deployment setup:
-# $ travis encrypt --add deploy.password
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: gmagno
-  password:
-    secure: PLEASE_REPLACE_ME
-  on:
-    tags: true
-    repo: gmagno/tmon
-    python: 3.8
+# # Assuming you have installed the travis-ci CLI tool, after you
+# # create the Github repo and add it to Travis, run the
+# # following command to finish PyPI deployment setup:
+# # $ travis encrypt --add deploy.password
+# deploy:
+#   provider: pypi
+#   distributions: sdist bdist_wheel
+#   user: gmagno
+#   password:
+#     secure: PLEASE_REPLACE_ME
+#   on:
+#     tags: true
+#     repo: gmagno/tmon
+#     python: 3.8
 
 
 
-# notifications:tox
-#   email: false
-# if: tag IS present
-# matrix:
-#   include:
-#   - sudo: required
-#     services:
-#       - docker
-#     env:
-#       - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
-#   - sudo: required
-#     services:
-#       - docker
-#     env:
-#       - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686
-#       - PRE_CMD=linux32
-# install:
-#   - docker pull $DOCKER_IMAGE
-# script:
-#   - docker run --rm -v `pwd`:/io -e TWINE_USERNAME -e TWINE_PASSWORD $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
-#   - ls wheelhouse/
+notifications:tox
+  email: false
+if: tag IS present
+matrix:
+  include:
+  - sudo: required
+    services:
+      - docker
+    env:
+      - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+  - sudo: required
+    services:
+      - docker
+    env:
+      - DOCKER_IMAGE=quay.io/pypa/manylinux1_i686
+      - PRE_CMD=linux32
+install:
+  - docker pull $DOCKER_IMAGE
+script:
+  - docker run --rm -v `pwd`:/io -e TWINE_USERNAME -e TWINE_PASSWORD $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
+  - ls wheelhouse/
