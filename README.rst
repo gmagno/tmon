@@ -3,8 +3,8 @@ Temp Monitor
 ===================
 
 
-.. image:: https://img.shields.io/pypi/v/tmon.svg
-        :target: https://pypi.python.org/pypi/tmon
+.. image:: https://img.shields.io/pypi/v/tmonpy.svg
+        :target: https://pypi.python.org/pypi/tmonpy
 
 .. image:: https://img.shields.io/travis/gmagno/tmon.svg
         :target: https://travis-ci.org/gmagno/tmon
@@ -13,8 +13,8 @@ Temp Monitor
         :target: https://tmon.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://img.shields.io/pypi/dm/tmonpy
-        :alt: PyPI - Downloads
+.. .. image:: https://img.shields.io/pypi/dm/tmonpy
+..         :alt: PyPI - Downloads
 
 .. image:: https://img.shields.io/github/downloads/gmagno/tmon/total
         :alt: GitHub All Releases
