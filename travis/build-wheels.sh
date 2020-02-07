@@ -37,7 +37,7 @@ for WHEEL in /io/wheelhouse/tmon*; do
     #     -u "${TWINE_USERNAME}" -p "${TWINE_PASSWORD}" \
     #     "${WHEEL}"
     # prod
-    /opt/python/cp38-cp38m/bin/twine upload \
+    /opt/python/cp38-cp38/bin/twine upload \
         --skip-existing \
         -u "${TWINE_USERNAME}" -p "${TWINE_PASSWORD}" \
         "${WHEEL}"
