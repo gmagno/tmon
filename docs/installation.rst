@@ -12,15 +12,26 @@ To install Temp Monitor, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install tmon
+    $ pip install tmonpy
 
-This is the preferred method to install Temp Monitor, as it will always install the most recent stable release.
+This is the preferred method to install Temp Monitor, as it will always install
+the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
 
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
+
+
+Alternatively a `tmon` binary (AppImage) may be downloaded from the releases
+page:
+
+.. code-block:: console
+
+    $ # replace ??????? by the actual hash
+    $ wget https://github.com/gmagno/tmon/releases/latest/download/tmon-???????-x86_64.AppImage
+    $ chmod +x tmon-*-x86_64.AppImage
 
 
 From sources
