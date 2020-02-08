@@ -13,8 +13,8 @@ cat > tmon.desktop <<EOF
 [Desktop Entry]
 Type=Application
 Name=tmon
-GenericName=Some generic name
-Comment=Some comment
+GenericName=Temperature Monitor
+Comment=Temperature Monitor -- a CLI tool for monitoring/reporting CPU temperatures.
 Icon=tmon
 Exec=tmon
 Terminal=true
