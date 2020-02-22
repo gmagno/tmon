@@ -23,7 +23,7 @@ class AxisSizeAction(argparse.Action):
 
 def parse_args():
     description = textwrap.dedent("""
-        Temperature Monitor (tmon v0.3.8) -- executes a program while
+        Temperature Monitor (tmon v0.4.0) -- executes a program while
         monitoring CPU temperature, reporting the min, max and mean
         temperatures and plotting an ascii chart at the end to stderr.
         All signals are redirected to the program.
@@ -202,7 +202,7 @@ def parse_args():
 def main():
     kwargs = parse_args()
     if kwargs['version']:
-        print("Temperature Monitor -- tmon v0.3.8")
+        print("Temperature Monitor -- tmon v0.4.0")
         return 0
 
     if platform.system() != 'Linux':
