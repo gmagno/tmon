@@ -31,16 +31,19 @@ def parse_args():
         SIGINT (Ctrl-C).
         For full documentation check the repo: https://github.com/gmagno/tmon
     """)
-    epilog = textwrap.dedent("""
-                    /##
-                   | ##
-                  /######   /######/####   /######  /#######
-                 |_  ##_/  | ##_  ##_  ## /##__  ##| ##__  ##
-                   | ##    | ## \ ## \ ##| ##  \ ##| ##  \ ##
-                   | ## /##| ## | ## | ##| ##  | ##| ##  | ##
-                   |  ####/| ## | ## | ##|  ######/| ##  | ##
-                    \___/  |__/ |__/ |__/ \______/ |__/  |__/
 
+    epilog = r"""
+           /##
+          | ##
+         /######   /######/####   /######  /#######
+        |_  ##_/  | ##_  ##_  ## /##__  ##| ##__  ##
+          | ##    | ## \ ## \ ##| ##  \ ##| ##  \ ##
+          | ## /##| ## | ## | ##| ##  | ##| ##  | ##
+          |  ####/| ## | ## | ##|  ######/| ##  | ##
+           \___/  |__/ |__/ |__/ \______/ |__/  |__/
+    """
+
+    epilog += textwrap.dedent("""
         return:
             %(prog)s returns when the child program exits, stops, or is
             terminated by a signal. The return value of %(prog)s is the return
